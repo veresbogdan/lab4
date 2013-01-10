@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 public class Grammar {
     private List<String> terminals;
     private List<String> nonTerminals;
-           private List<Production> productions;
+    private List<Production> productions;
     private String startingSymbol;
 
     public  Grammar() {
