@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Grammar {
     private List<String> terminals;
@@ -103,6 +101,10 @@ public class Grammar {
         return false;
     }
 
+    public String getStartingSymbol() {
+        return startingSymbol;
+    }
+
     public void setStartingSymbol(String startingSymbol) {
         this.startingSymbol = startingSymbol;
     }
@@ -144,5 +146,16 @@ public class Grammar {
             }
         }
         return null;
+    }
+
+
+    public Set<Production> getProductionsWithAGivenLHS(String symbol){
+        Set<Production> listNewProductions=new HashSet<Production>();
+        for(Production production:this.productions){
+            if(production.getLhs().equals(symbol)){
+                listNewProductions.add(new Production(production.getLhs(),production.getResults(),0));
+            }
+        }
+        return listNewProductions;
     }
 }

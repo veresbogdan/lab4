@@ -1,12 +1,19 @@
 package main.grammar;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 public class Production {
     private String lhs;
     private Vector<String> results;
-    private int position;
+    private int position=0;
+
+    public Production(String lhs, Vector<String> results, int position) {
+        this.lhs = lhs;
+        this.results = results;
+        this.position = position;
+    }
 
     public int getPosition() {
         return position;
@@ -29,7 +36,7 @@ public class Production {
         this.lhs = lhs;
     }
 
-    public List<String> getResults() {
+    public Vector<String> getResults() {
         return results;
     }
 
@@ -61,13 +68,16 @@ public class Production {
         return false;
     }
 
-    public String getSymbolAfterPoint(){
+    public String getSymbolAfterPoint() {
         return this.getResults().get(position);
     }
 
-    public void movePoint(){
+    public void movePoint() {
         this.setPosition(this.getPosition()+1);
     }
 
 
+    public void setPoint(int position){
+        this.position=position;
+    }
 }
