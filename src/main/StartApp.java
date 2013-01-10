@@ -8,6 +8,8 @@ public class StartApp {
     {
         Grammar grammar=new Grammar();
         grammar.readGrammarFromFile();
+        grammar.printGrammar();
+
     }
 
 }

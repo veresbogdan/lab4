@@ -29,9 +29,7 @@ public class Grammar {
     public void readGrammarFromFile()
     {
         try{
-
-
-            FileInputStream fstream = new FileInputStream("main/grammar.txt");
+            FileInputStream fstream = new FileInputStream("grammar.txt");
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;
