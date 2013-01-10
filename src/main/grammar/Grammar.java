@@ -48,7 +48,7 @@ public class Grammar {
                         } else {
                             Production production = new Production();
                             String[] splited = strLine.split("->");
-                            production.setNonTerminal(splited[0].trim());
+                            production.setLhs(splited[0].trim());
                             stringTokenizer=new StringTokenizer(splited[1],"|");
                             while(stringTokenizer.hasMoreTokens()) {
                                 production.addResult((stringTokenizer.nextToken().trim()));
@@ -77,7 +77,7 @@ public class Grammar {
                 if ((result.length() == 2 && this.isTerminal(String.valueOf(result.charAt(0))))) {
                     return false;
                 }
-                if (String.valueOf(result.charAt(0)).equals("@") && production.getNonTerminal().equals(this.startingSymbol)) {
+                if (String.valueOf(result.charAt(0)).equals("@") && production.getLhs().equals(this.startingSymbol)) {
                     return false;
                 }
             }
@@ -139,7 +139,7 @@ public class Grammar {
 
     public Production getProductionFromList(String prod) {
         for(Production production: productions) {
-            if(production.getNonTerminal().equals(prod)) {
+            if(production.getLhs().equals(prod)) {
                 return production;
             }
         }

@@ -60,4 +60,14 @@ public class Production {
         }
         return false;
     }
+
+    public String getSymbolAfterPoint(){
+        return this.getResults().get(position);
+    }
+
+    public void movePoint(){
+        this.setPosition(this.getPosition()+1);
+    }
+
+
 }
