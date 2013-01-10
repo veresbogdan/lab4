@@ -69,7 +69,12 @@ public class Production {
     }
 
     public String getSymbolAfterPoint() {
-        return this.getResults().get(position);
+        if(position<results.size()){
+            return this.getResults().get(position);
+        }
+        else{
+            return null;
+        }
     }
 
     public void movePoint() {
@@ -79,5 +84,36 @@ public class Production {
 
     public void setPoint(int position){
         this.position=position;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Production)) return false;
+
+        Production that = (Production) o;
+
+        if (position != that.position) return false;
+        if (!lhs.equals(that.lhs)) return false;
+        if (!results.equals(that.results)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = lhs.hashCode();
+        result = 31 * result + results.hashCode();
+        result = 31 * result + position;
+        return result;
+    }
+
+    public Object clone(){
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return null;
     }
 }

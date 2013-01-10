@@ -4,11 +4,7 @@ import main.grammar.Grammar;
 import main.grammar.Production;
 import main.model.State;
 
-import javax.swing.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 public class LR0 {
 
@@ -17,6 +13,7 @@ public class LR0 {
 
     public LR0(Grammar grammar){
         this.grammar=grammar;
+        this.states=new LinkedList<State>();
     }
 
     public void startInitialPhase(){
@@ -30,7 +27,22 @@ public class LR0 {
 
         firstSet = closure(firstSet);
         state.setSetProductions(firstSet);
+        states.add(state);
 
+        Queue<State> stateQueue = new LinkedList<State>();
+        stateQueue.add(state);
+
+        while(!stateQueue.isEmpty()){
+            State currentState = stateQueue.poll();
+            for(String symbol:grammar.getAllSymbols()){
+                State newState=goTo(currentState,symbol);
+                if(newState!=null && !newState.getSetProductions().isEmpty() && !states.contains(newState)){
+                    stateQueue.add(newState);
+                    states.add(newState);
+                }
+            }
+        }
+        System.out.print(states.size());
     }
 
     public void addState(State s){
@@ -60,9 +72,12 @@ public class LR0 {
     public State goTo(State state,String symbol){
         Set<Production> listForClosure=new HashSet<Production>();
         for(Production production:state.getSetProductions()){
-            if(production.getSymbolAfterPoint().equals(symbol)){
-                production.movePoint();
-                listForClosure.add(production);
+            if(production.getSymbolAfterPoint()!=null && production.getSymbolAfterPoint().equals(symbol)){
+                Production newProd=new Production();
+                newProd.setLhs(production.getLhs());
+                newProd.setPosition(production.getPosition()+1);
+                newProd.setResults(production.getResults());
+                listForClosure.add(newProd);
             }
         }
 

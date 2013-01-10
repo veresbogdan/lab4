@@ -158,4 +158,11 @@ public class Grammar {
         }
         return listNewProductions;
     }
+
+    public Set<String> getAllSymbols(){
+        Set<String> setSymbols=new HashSet<String>();
+        setSymbols.addAll(this.nonTerminals);
+        setSymbols.addAll(this.terminals);
+        return setSymbols;
+    }
 }
