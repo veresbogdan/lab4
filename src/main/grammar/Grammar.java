@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
 public class Grammar {
     private List<String> terminals;
     private List<String> nonTerminals;
-    private List<Production> productions;
+           private List<Production> productions;
     private String startingSymbol;
     public  Grammar()
     {
@@ -68,7 +68,7 @@ public class Grammar {
                         {
                             Production production=new Production();
                             String[] splited=strLine.split("->");
-                            production.setNonTerminal(splited[0].trim());
+                            production.setLhs(splited[0].trim());
                             stringTokenizer=new StringTokenizer(splited[1],"|");
                             while(stringTokenizer.hasMoreTokens())
                             {
@@ -106,7 +106,7 @@ public class Grammar {
                 {
                     return false;
                 }
-                if(String.valueOf(result.charAt(0)).equals("@") && production.getNonTerminal().equals(this.startingSymbol) )
+                if(String.valueOf(result.charAt(0)).equals("@") && production.getLhs().equals(this.startingSymbol) )
                 {
                     return false;
                 }
@@ -173,7 +173,7 @@ public class Grammar {
     {
         for(Production production:productions)
         {
-            if(production.getNonTerminal().equals(prod))
+            if(production.getLhs().equals(prod))
             {
                 return production;
             }

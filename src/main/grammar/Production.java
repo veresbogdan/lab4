@@ -11,19 +11,29 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 public class Production {
-    private String nonTerminal;
+    private String lhs;
     private Vector<String> results;
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     public Production()
     {
         this.results=new Vector<String>();
     }
 
-    public String getNonTerminal() {
-        return nonTerminal;
+    public String getLhs() {
+        return lhs;
     }
 
-    public void setNonTerminal(String nonTerminal) {
-        this.nonTerminal = nonTerminal;
+    public void setLhs(String lhs) {
+        this.lhs = lhs;
     }
 
     public List<String> getResults() {
@@ -46,7 +56,7 @@ public class Production {
             stringBuilder.append(" | ");
         }
 
-        return this.nonTerminal+"->"+stringBuilder.substring(0,stringBuilder.length()-2);
+        return this.lhs +"->"+stringBuilder.substring(0,stringBuilder.length()-2);
     }
     public boolean hasResult(String result)
     {
