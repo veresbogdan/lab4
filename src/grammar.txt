@@ -1,5 +1,0 @@
-A B
-a b
-A
-B->b|aA
-A->aB|@

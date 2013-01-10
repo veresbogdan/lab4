@@ -4,19 +4,29 @@ import java.util.List;
 import java.util.Vector;
 
 public class Production {
-    private String nonTerminal;
+    private String lhs;
     private Vector<String> results;
+    private int position;
 
-    public Production() {
-        this.results = new Vector<String>();
+    public int getPosition() {
+        return position;
     }
 
-    public String getNonTerminal() {
-        return nonTerminal;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
-    public void setNonTerminal(String nonTerminal) {
-        this.nonTerminal = nonTerminal;
+    public Production()
+    {
+        this.results=new Vector<String>();
+    }
+
+    public String getLhs() {
+        return lhs;
+    }
+
+    public void setLhs(String lhs) {
+        this.lhs = lhs;
     }
 
     public List<String> getResults() {
@@ -38,7 +48,8 @@ public class Production {
             stringBuilder.append(result);
             stringBuilder.append(" | ");
         }
-        return this.nonTerminal + "->" + stringBuilder.substring(0, stringBuilder.length()-2);
+
+        return this.lhs +"->"+stringBuilder.substring(0,stringBuilder.length()-2);
     }
 
     public boolean hasResult(String result) {
