@@ -46,13 +46,19 @@ public class Grammar {
                         } else {
                             Production production = new Production();
                             String[] splited = strLine.split("->");
-                            production.setLhs(splited[0].trim());
+                            String lhsSide= splited[0].trim();
+//                            production.setLhs();
                             stringTokenizer=new StringTokenizer(splited[1],"|");
                             while(stringTokenizer.hasMoreTokens()) {
-                                production.addResult((stringTokenizer.nextToken().trim()));
+                                Production newProduction=new Production();
+                                newProduction.setLhs(lhsSide);
+                                int indexString;
+                                String resultSide=stringTokenizer.nextToken().trim();
+                                for(indexString=0; indexString<=resultSide.length()-1; indexString++)
+                                    production.addResult(resultSide.charAt(indexString)+"");
+                                this.productions.add(production);
                             }
 
-                            this.productions.add(production);
                         }
                     }
                 }
