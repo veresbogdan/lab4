@@ -45,6 +45,7 @@ public class Grammar {
                             startingSymbol = strLine;
                         } else {
                             Production production = new Production();
+                            System.out.print(strLine);
                             String[] splited = strLine.split("->");
                             String lhsSide= splited[0].trim();
 //                            production.setLhs();
@@ -55,8 +56,8 @@ public class Grammar {
                                 int indexString;
                                 String resultSide=stringTokenizer.nextToken().trim();
                                 for(indexString=0; indexString<=resultSide.length()-1; indexString++)
-                                    production.addResult(resultSide.charAt(indexString)+"");
-                                this.productions.add(production);
+                                    newProduction.addResult(resultSide.charAt(indexString)+"");
+                                this.productions.add(newProduction);
                             }
 
                         }

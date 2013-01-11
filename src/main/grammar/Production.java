@@ -53,10 +53,10 @@ public class Production {
 
         for (String result: results) {
             stringBuilder.append(result);
-            stringBuilder.append(" | ");
+
         }
 
-        return this.lhs +"->"+stringBuilder.substring(0,stringBuilder.length()-2);
+        return this.lhs +"->"+stringBuilder;
     }
 
     public boolean hasResult(String result) {
