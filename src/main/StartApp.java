@@ -15,6 +15,7 @@ public class StartApp {
         grammar.printGrammar();
         LR0 lr0=new LR0(grammar);
         lr0.startInitialPhase();
+        lr0.startTableCreationForStates();
         System.out.print("End");
     }
 

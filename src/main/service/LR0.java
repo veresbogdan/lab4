@@ -90,5 +90,9 @@ public class LR0 {
     }
 
 
+    public void startTableCreationForStates() {
+        for(State state:states){
 
+        }
+    }
 }
