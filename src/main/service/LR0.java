@@ -3,6 +3,8 @@ package main.service;
 import main.grammar.Grammar;
 import main.grammar.Production;
 import main.model.State;
+import main.model.graph.DirectedGraph;
+import main.model.graph.Vertex;
 
 import java.util.*;
 
@@ -10,6 +12,7 @@ public class LR0 {
 
     private List<State> states;
     private Grammar grammar;
+    private DirectedGraph LRTable=new DirectedGraph();
 
     public LR0(Grammar grammar){
         this.grammar=grammar;
@@ -17,6 +20,7 @@ public class LR0 {
     }
 
     public void startInitialPhase(){
+        int indexOfSet=0;
         Set<Production> firstSet = new HashSet<Production>();
         Vector<String> res = new Vector<String>();
         State state = new State();
@@ -27,6 +31,7 @@ public class LR0 {
 
         firstSet = closure(firstSet);
         state.setSetProductions(firstSet);
+        state.setNumberOfSet(indexOfSet++);
         states.add(state);
 
         Queue<State> stateQueue = new LinkedList<State>();
@@ -38,11 +43,34 @@ public class LR0 {
                 State newState=goTo(currentState,symbol);
                 if(newState!=null && !newState.getSetProductions().isEmpty() && !states.contains(newState)){
                     stateQueue.add(newState);
+                    newState.setNumberOfSet(indexOfSet++);
                     states.add(newState);
+                    this.addStateToTable(newState,currentState,symbol);
+
                 }
             }
         }
         System.out.print(states.size());
+    }
+
+    private void addStateToTable(State newState,State currentState,String symbol) {
+//        LRTable.addVertex(state.getNumberOfSet());
+        Vertex vertex=new Vertex(newState.getNumberOfSet());
+        if(newState.stateIsAccept(grammar.getStartingSymbol())){
+            newState.setAction("accept");
+        }
+        else{
+            int stateIsReduce=newState.stateIsReduce(grammar.getProductions());
+            if(stateIsReduce!=-1){
+                newState.setAction(Integer.toString(stateIsReduce));
+            }
+            else{
+                newState.setAction("shift");
+//                List<String> list
+            }
+        }
+        LRTable.addVertex(vertex);
+
     }
 
     public void addState(State s){
@@ -88,7 +116,6 @@ public class LR0 {
 
 
     }
-
 
     public void startTableCreationForStates() {
         for(State state:states){

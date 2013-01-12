@@ -3,8 +3,8 @@ package main.model.graph;
 public class Edge implements Comparable<Edge>{
 	private int soruce;
 	private int target;
-	private int cost;
-	public Edge(Integer origin, Integer target, Integer cost) {
+	private String cost;
+	public Edge(Integer origin, Integer target, String cost) {
 		this.soruce=origin;
 		this.target=target;
 		this.cost=cost;
@@ -29,10 +29,10 @@ public class Edge implements Comparable<Edge>{
 	public void setTarget(int target) {
 		this.target = target;
 	}
-	public int getCost() {
+	public String getCost() {
 		return cost;
 	}
-	public void setCost(int cost) {
+	public void setCost(String cost) {
 		this.cost = cost;
 	}
 	

@@ -9,13 +9,13 @@ import java.util.*;
 public class Grammar {
     private List<String> terminals;
     private List<String> nonTerminals;
-    private List<Production> productions;
+    private Set<Production> productions;
     private String startingSymbol;
 
     public  Grammar() {
         this.nonTerminals = new ArrayList<String>();
         this.terminals = new ArrayList<String>();
-        this.productions = new ArrayList<Production>();
+        this.productions = new HashSet<Production>();
     }
 
     public void readGrammarFromFile() {
@@ -25,6 +25,7 @@ public class Grammar {
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;
             int index = 0;
+            int productionNumber=1;
             while ((strLine = br.readLine()) != null) {
                 strLine.trim();
                 StringTokenizer stringTokenizer = new StringTokenizer(strLine," ");
@@ -53,6 +54,8 @@ public class Grammar {
                             while(stringTokenizer.hasMoreTokens()) {
                                 Production newProduction=new Production();
                                 newProduction.setLhs(lhsSide);
+                                newProduction.setProductionNumber(productionNumber);
+                                productionNumber++;
                                 int indexString;
                                 String resultSide=stringTokenizer.nextToken().trim();
                                 for(indexString=0; indexString<=resultSide.length()-1; indexString++)
@@ -155,6 +158,29 @@ public class Grammar {
         return null;
     }
 
+    public List<String> getTerminals() {
+        return terminals;
+    }
+
+    public void setTerminals(List<String> terminals) {
+        this.terminals = terminals;
+    }
+
+    public List<String> getNonTerminals() {
+        return nonTerminals;
+    }
+
+    public void setNonTerminals(List<String> nonTerminals) {
+        this.nonTerminals = nonTerminals;
+    }
+
+    public Set<Production> getProductions() {
+        return productions;
+    }
+
+    public void setProductions(Set<Production> productions) {
+        this.productions = productions;
+    }
 
     public Set<Production> getProductionsWithAGivenLHS(String symbol){
         Set<Production> listNewProductions=new HashSet<Production>();

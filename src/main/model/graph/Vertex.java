@@ -75,7 +75,7 @@ public class Vertex{
 //			System.out.println("Source: "+edge.getSoruce() + " Cost:" +edge.getCost());
 //		}
     }
-    public int getCostToVertex(Vertex target)
+    public String getCostToVertex(Vertex target)
     {
 
         for(Edge edge:outbounds)
@@ -85,7 +85,7 @@ public class Vertex{
                 return edge.getCost();
             }
         }
-        return 0;
+        return null;
 
     }
 

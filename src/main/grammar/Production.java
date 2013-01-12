@@ -8,6 +8,15 @@ public class Production {
     private String lhs;
     private Vector<String> results;
     private int position=0;
+    private int productionNumber;
+
+    public int getProductionNumber() {
+        return productionNumber;
+    }
+
+    public void setProductionNumber(int productionNumber) {
+        this.productionNumber = productionNumber;
+    }
 
     public Production(String lhs, Vector<String> results, int position) {
         this.lhs = lhs;
