@@ -170,7 +170,9 @@ public class LR0 {
 
         StateSymbol initial = new StateSymbol();
         initial.setState(states.get(0));
+        initial.setSymbol("");
         stateSymbols.push(initial);
+        System.out.println("The parsing:");
 
         while (!inputSequence.isEmpty()) {
             if (stateSymbols.peek().getState().getAction().equals("shift")) {
@@ -209,6 +211,16 @@ public class LR0 {
                     stateSymbols.push(next);
                 }
             }
+
+            System.out.print("$");
+            for (StateSymbol s: stateSymbols) {
+                System.out.print(s.getSymbol() + " " + "s" + s.getState().getNumberOfState() + " ");
+            }
+            System.out.print("                        " );
+            for (int i = inputSequence.size() - 1; i >= 0; i--) {
+                System.out.print(inputSequence.get(i));
+            }
+            System.out.println("");
         }
 
         return false;
