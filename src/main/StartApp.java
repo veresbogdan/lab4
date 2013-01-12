@@ -15,7 +15,11 @@ public class StartApp {
         grammar.printGrammar();
         LR0 lr0=new LR0(grammar);
         lr0.startInitialPhase();
+        System.out.println("----------------------------------------------");
+        System.out.println("Canonical states \n");
         lr0.printAllStates();
+        System.out.println("----------------------------------------------");
+        System.out.println("LR(0) table \n");
         lr0.printGraph();
         lr0.parseSequence();
 

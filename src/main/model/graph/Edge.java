@@ -38,10 +38,6 @@ public class Edge implements Comparable<Edge>{
 
     @Override
     public String toString() {
-        return "Edge{" +
-                "soruce=" + soruce +
-                ", target=" + target +
-                ", cost='" + cost + '\'' +
-                '}';
+        return "s"+soruce+" "+cost+" -> s"+target;
     }
 }

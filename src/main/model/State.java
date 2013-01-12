@@ -130,11 +130,8 @@ public class State {
 
     @Override
     public String toString() {
-        return "State{" +
-                ", numberOfState=" + numberOfState +
-                ",setProductions=" + setProductions +
-
-                ", action='" + action + '\'' +
-                '}';
+        return "s" +  numberOfState +
+                " action='" + action + '\'' +
+                "\n   setProductions=" + setProductions;
     }
 }

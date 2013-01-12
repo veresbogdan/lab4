@@ -41,7 +41,7 @@ public class LR0 {
 
         Vertex vertex=new Vertex(state.getNumberOfState());
         LRTable.addVertex(vertex);
-//        LRTable.addEdge(currentState,newState,symbol);
+
 
         Queue<State> stateQueue = new LinkedList<State>();
         stateQueue.add(state);
@@ -65,7 +65,6 @@ public class LR0 {
                 }
             }
         }
-        System.out.print(states.size());
     }
 
     public void makeActionForState(State newState){

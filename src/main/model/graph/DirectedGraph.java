@@ -126,7 +126,6 @@ public class DirectedGraph {
     public void printGraph(){
         List<Vertex> list = new ArrayList<Vertex>(vertices.values());
         for(Vertex vertex:list){
-            System.out.println(vertex.getOrigin());
             for(Edge edge:vertex.getOutbound()){
                 System.out.println(edge);
             }

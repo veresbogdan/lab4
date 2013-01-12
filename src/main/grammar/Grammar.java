@@ -48,7 +48,6 @@ public class Grammar {
                             startingSymbol = strLine;
                         } else {
                             Production production = new Production();
-                            System.out.print(strLine);
                             String[] splited = strLine.split("->");
                             String lhsSide= splited[0].trim();
 //                            production.setLhs();
@@ -138,18 +137,18 @@ public class Grammar {
     }
 
     public void printGrammar() {
-        System.out.println("\nSet of non-terminals");
+        System.out.print("\nSet of non-terminals: ");
 
         for (String nonTerm: nonTerminals) {
             System.out.print(nonTerm + " ");
         }
-        System.out.println("\nSet of terminals ");
-        System.out.println("\nStarting symbol " + startingSymbol);
 
+        System.out.println("\nStarting symbol: " + startingSymbol);
+        System.out.print("Set of terminals: ");
         for (String term: terminals) {
-            System.out.print(term + " ");
+            System.out.print(term+ " ");
         }
-        System.out.println("\nSet of productions ");
+        System.out.println("\nSet of productions: ");
         for (Production production: productions) {
             System.out.println(production.toString() + " ");
         }
