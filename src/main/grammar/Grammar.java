@@ -198,4 +198,9 @@ public class Grammar {
         setSymbols.addAll(this.terminals);
         return setSymbols;
     }
+
+    //TODO
+    public List<Production> getListProductions() {
+        return new ArrayList<Production>();
+    }
 }

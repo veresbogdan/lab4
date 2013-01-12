@@ -3,9 +3,11 @@ package main.service;
 import main.grammar.Grammar;
 import main.grammar.Production;
 import main.model.State;
+import main.model.StateSymbol;
 import main.model.graph.DirectedGraph;
 import main.model.graph.Vertex;
 
+import java.io.*;
 import java.util.*;
 
 public class LR0 {
@@ -13,6 +15,8 @@ public class LR0 {
     private List<State> states;
     private Grammar grammar;
     private DirectedGraph LRTable=new DirectedGraph();
+    private Stack<String> inputSequence = new Stack<String>();
+    private Stack<Integer> result = new Stack<Integer>();
 
     public LR0(Grammar grammar){
         this.grammar=grammar;
@@ -121,5 +125,72 @@ public class LR0 {
         for(State state:states){
 
         }
+    }
+
+    public void getInputSequenceFromFile() throws IOException {
+        FileInputStream fStream = new FileInputStream("sequence.txt");
+        DataInputStream in = new DataInputStream(fStream);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String strLine;
+        List<String> list = new ArrayList<String>();
+
+        while ((strLine = br.readLine()) != null) {
+            strLine.trim();
+            StringTokenizer stringTokenizer = new StringTokenizer(strLine," ");
+            while (stringTokenizer.hasMoreElements()) {
+                String stringToken = stringTokenizer.nextElement().toString();
+                if (stringToken != null) {
+                    list.add(stringToken);
+                }
+            }
+        }
+
+        //TODO put in stack the list in reverse order
+    }
+
+    public boolean parseSequence() {
+        Stack<StateSymbol> stateSymbols = new Stack<StateSymbol>();
+
+        StateSymbol initial = new StateSymbol();
+        initial.setState(states.get(0));
+        stateSymbols.push(initial);
+
+        while (!inputSequence.isEmpty()) {
+            if (stateSymbols.peek().getState().getAction().equals("shift")) {
+
+                StateSymbol next = new StateSymbol();
+                next.setSymbol(inputSequence.pop());
+                next.setState(getNextStateFromTable(stateSymbols.peek().getState(), next.getSymbol()));
+
+                stateSymbols.push(next);
+            } else {
+
+                if (stateSymbols.peek().getState().getAction().equals("accept")) {
+                    return true;
+
+                } else {
+                    Integer reduceIndex = Integer.parseInt(stateSymbols.peek().getState().getAction());
+                    Production reduceProduction = grammar.getListProductions().get(reduceIndex-1);
+
+                    result.push(reduceIndex);
+
+                    for (int i = 0; i < reduceProduction.getResults().size(); i++) {
+                        stateSymbols.pop();
+                    }
+
+                    StateSymbol next = new StateSymbol();
+                    next.setSymbol(reduceProduction.getLhs());
+                    next.setState(getNextStateFromTable(stateSymbols.peek().getState(), reduceProduction.getLhs()));
+
+                    stateSymbols.push(next);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private State getNextStateFromTable(State state, String symbol) {
+        return null;
     }
 }
