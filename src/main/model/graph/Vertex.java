@@ -89,5 +89,9 @@ public class Vertex{
 
     }
 
+    @Override
+    public String toString() {
+        return "Vertex{origin=" + origin;
 
+    }
 }

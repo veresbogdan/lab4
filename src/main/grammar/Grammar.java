@@ -58,8 +58,12 @@ public class Grammar {
                                 productionNumber++;
                                 int indexString;
                                 String resultSide=stringTokenizer.nextToken().trim();
-                                for(indexString=0; indexString<=resultSide.length()-1; indexString++)
-                                    newProduction.addResult(resultSide.charAt(indexString)+"");
+                                StringTokenizer stringTokenizer2=new StringTokenizer(resultSide," ");
+                                while(stringTokenizer2.hasMoreElements()){
+                                    newProduction.addResult(stringTokenizer2.nextToken());
+                                }
+//                                for(indexString=0; indexString<=resultSide.length()-1; indexString++)
+//                                    newProduction.addResult(resultSide.charAt(indexString)+"");
                                 this.productions.add(newProduction);
                             }
 

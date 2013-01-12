@@ -35,7 +35,13 @@ public class Edge implements Comparable<Edge>{
 	public void setCost(String cost) {
 		this.cost = cost;
 	}
-	
 
-
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "soruce=" + soruce +
+                ", target=" + target +
+                ", cost='" + cost + '\'' +
+                '}';
+    }
 }

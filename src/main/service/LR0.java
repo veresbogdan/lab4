@@ -35,8 +35,13 @@ public class LR0 {
 
         firstSet = closure(firstSet);
         state.setSetProductions(firstSet);
-        state.setNumberOfSet(indexOfSet++);
+        state.setNumberOfState(indexOfSet++);
+        makeActionForState(state);
         states.add(state);
+
+        Vertex vertex=new Vertex(state.getNumberOfState());
+        LRTable.addVertex(vertex);
+//        LRTable.addEdge(currentState,newState,symbol);
 
         Queue<State> stateQueue = new LinkedList<State>();
         stateQueue.add(state);
@@ -45,9 +50,10 @@ public class LR0 {
             State currentState = stateQueue.poll();
             for(String symbol:grammar.getAllSymbols()){
                 State newState=goTo(currentState,symbol);
+                makeActionForState(newState);
                 if(newState!=null && !newState.getSetProductions().isEmpty() && !states.contains(newState)){
                     stateQueue.add(newState);
-                    newState.setNumberOfSet(indexOfSet++);
+                    newState.setNumberOfState(indexOfSet++);
                     states.add(newState);
                     this.addStateToTable(newState,currentState,symbol);
 
@@ -57,9 +63,7 @@ public class LR0 {
         System.out.print(states.size());
     }
 
-    private void addStateToTable(State newState,State currentState,String symbol) {
-//        LRTable.addVertex(state.getNumberOfSet());
-        Vertex vertex=new Vertex(newState.getNumberOfSet());
+    public void makeActionForState(State newState){
         if(newState.stateIsAccept(grammar.getStartingSymbol())){
             newState.setAction("accept");
         }
@@ -70,11 +74,14 @@ public class LR0 {
             }
             else{
                 newState.setAction("shift");
-//                List<String> list
+
             }
         }
+    }
+    private void addStateToTable(State newState,State currentState,String symbol) {
+        Vertex vertex=new Vertex(newState.getNumberOfState());
         LRTable.addVertex(vertex);
-
+        LRTable.addEdge(currentState,newState,symbol);
     }
 
     public void addState(State s){
@@ -195,5 +202,15 @@ public class LR0 {
 
     private State getNextStateFromTable(State state, String symbol) {
         return null;
+    }
+
+    public void printAllStates(){
+        for(State state:this.states){
+            System.out.println(state.toString());
+        }
+    }
+
+    public void printGraph(){
+        LRTable.printGraph();
     }
 }

@@ -1,7 +1,7 @@
 ( ) id ,
 S L
 S
-S->(L)
+S->( L )
 S->id
 L->S
-L->L,S
+L->L , S

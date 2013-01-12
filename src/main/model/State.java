@@ -9,7 +9,7 @@ import java.util.Set;
 public class State {
 
     private Set<Production> setProductions;
-    private int numberOfSet;
+    private int numberOfState;
     private String action=null;
 
     public State() {
@@ -19,12 +19,12 @@ public class State {
         setProductions=new HashSet<Production>();
     }
 
-    public int getNumberOfSet() {
-        return numberOfSet;
+    public int getNumberOfState() {
+        return numberOfState;
     }
 
-    public void setNumberOfSet(int numberOfSet) {
-        this.numberOfSet = numberOfSet;
+    public void setNumberOfState(int numberOfState) {
+        this.numberOfState = numberOfState;
     }
 
     public void addProduction(Production production) {
@@ -132,7 +132,7 @@ public class State {
     public String toString() {
         return "State{" +
                 "setProductions=" + setProductions +
-                ", numberOfSet=" + numberOfSet +
+                ", numberOfSet=" + numberOfState +
                 ", action='" + action + '\'' +
                 '}';
     }

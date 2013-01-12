@@ -1,16 +1,11 @@
 package main.model.graph;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import main.model.State;
+
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 
 public class DirectedGraph {
@@ -123,5 +118,22 @@ public class DirectedGraph {
 
     public void addVertex(Vertex vertex) {
         vertices.put(vertex.getOrigin(),vertex);
+    }
+
+    public void addEdge(State currentState, State newState, String symbol) {
+        Vertex currentVertex=vertices.get(currentState.getNumberOfState());
+        Vertex  newVertex=vertices.get(newState.getNumberOfState());
+        currentVertex.addOutbound(new Edge(currentVertex.getOrigin(),newVertex.getOrigin(),symbol));
+    }
+
+    public void printGraph(){
+        List<Vertex> list = new ArrayList<Vertex>(vertices.values());
+        for(Vertex vertex:list){
+            System.out.println(vertex.getOrigin());
+            for(Edge edge:vertex.getOutbound()){
+                System.out.println(edge);
+            }
+
+        }
     }
 }

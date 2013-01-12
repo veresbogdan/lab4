@@ -59,10 +59,18 @@ public class Production {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-
+        int index=0;
+        boolean pointAdded=false;
         for (String result: results) {
+            if(index==position){
+                stringBuilder.append(".");
+                pointAdded=true;
+            }
+            index++;
             stringBuilder.append(result);
-
+        }
+        if(pointAdded==false){
+            stringBuilder.append(".");
         }
 
         return this.lhs +"->"+stringBuilder;
