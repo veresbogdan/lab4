@@ -230,9 +230,8 @@ public class LR0 {
         }
     }
 
-    public void printGraph(){
-        LRTable.printGraph();
-//       List<Production> listProd=grammar.getListProductions();
+    public void printGraph(LR0 lr0){
+        LRTable.printGraph(lr0);
     }
 
     public State getStateAtIndex(State state){
@@ -244,5 +243,13 @@ public class LR0 {
             }
         }
         return null;
+    }
+
+    public List<State> getStates() {
+        return states;
+    }
+
+    public void setStates(List<State> states) {
+        this.states = states;
     }
 }
