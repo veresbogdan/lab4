@@ -144,12 +144,16 @@ public class LR0 {
                 }
             }
         }
-
-        //TODO put in stack the list in reverse order
+        Integer listSize = list.size();
+        for(int i = listSize-1; i >= 0; i--) {
+            inputSequence.push(list.get(i));
+        }
     }
 
-    public boolean parseSequence() {
+    public boolean parseSequence() throws IOException {
         Stack<StateSymbol> stateSymbols = new Stack<StateSymbol>();
+
+        getInputSequenceFromFile();
 
         StateSymbol initial = new StateSymbol();
         initial.setState(states.get(0));
@@ -186,7 +190,6 @@ public class LR0 {
                 }
             }
         }
-
         return false;
     }
 
