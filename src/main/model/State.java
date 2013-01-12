@@ -131,8 +131,9 @@ public class State {
     @Override
     public String toString() {
         return "State{" +
-                "setProductions=" + setProductions +
-                ", numberOfSet=" + numberOfState +
+                ", numberOfState=" + numberOfState +
+                ",setProductions=" + setProductions +
+
                 ", action='" + action + '\'' +
                 '}';
     }

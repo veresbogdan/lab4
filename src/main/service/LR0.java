@@ -30,7 +30,7 @@ public class LR0 {
         State state = new State();
 
         res.add(grammar.getStartingSymbol());
-        Production production = new Production("Y", res, 0);
+        Production production = new Production("Y", res, 0,0);
         firstSet.add(production);
 
         firstSet = closure(firstSet);
@@ -116,6 +116,7 @@ public class LR0 {
                 newProd.setLhs(production.getLhs());
                 newProd.setPosition(production.getPosition()+1);
                 newProd.setResults(production.getResults());
+                newProd.setProductionNumber(production.getProductionNumber());
                 listForClosure.add(newProd);
             }
         }
@@ -181,7 +182,7 @@ public class LR0 {
 
                 } else {
                     Integer reduceIndex = Integer.parseInt(stateSymbols.peek().getState().getAction());
-                    Production reduceProduction = grammar.getListProductions().get(reduceIndex-1);
+                    Production reduceProduction = grammar.getListProductions().get(reduceIndex);
 
                     result.push(reduceIndex);
 

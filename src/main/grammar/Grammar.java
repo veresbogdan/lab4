@@ -190,7 +190,7 @@ public class Grammar {
         Set<Production> listNewProductions=new HashSet<Production>();
         for(Production production:this.productions){
             if(production.getLhs().equals(symbol)){
-                listNewProductions.add(new Production(production.getLhs(),production.getResults(),0));
+                listNewProductions.add(new Production(production.getLhs(),production.getResults(),0,production.getProductionNumber()));
             }
         }
         return listNewProductions;
@@ -205,6 +205,21 @@ public class Grammar {
 
     //TODO
     public List<Production> getListProductions() {
-        return new ArrayList<Production>();
+        List<Production> list=new ArrayList<Production>();
+        for(int index=1; index<=productions.size(); index++){
+            list.add(index,getProductionWithIndex(index));
+        }
+        return list;
+    }
+
+    public Production getProductionWithIndex(int index){
+        Iterator<Production> iterator=productions.iterator();
+        while(iterator.hasNext()){
+            Production production=iterator.next();
+            if(production.getProductionNumber()==index){
+                return production;
+            }
+        }
+        return null;
     }
 }

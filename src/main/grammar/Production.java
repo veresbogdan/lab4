@@ -18,10 +18,11 @@ public class Production {
         this.productionNumber = productionNumber;
     }
 
-    public Production(String lhs, Vector<String> results, int position) {
+    public Production(String lhs, Vector<String> results, int position,int productionNumber) {
         this.lhs = lhs;
         this.results = results;
         this.position = position;
+        this.productionNumber=productionNumber;
     }
 
     public int getPosition() {
