@@ -60,7 +60,7 @@ public class LR0 {
                 } else{
                     if(newState!=null && !newState.getSetProductions().isEmpty() ){
                         State newState2=this.getStateAtIndex(newState);
-                        this.addStateToTableOldVertex(newState2,currentState,symbol);
+                        this.addStateToTableOldVertex(newState2, currentState, symbol);
                     }
                 }
             }
@@ -125,7 +125,7 @@ public class LR0 {
             if(production.getSymbolAfterPoint()!=null && production.getSymbolAfterPoint().equals(symbol)){
                 Production newProd=new Production();
                 newProd.setLhs(production.getLhs());
-                newProd.setPosition(production.getPosition()+1);
+                newProd.setPosition(production.getPosition() + 1);
                 newProd.setResults(production.getResults());
                 newProd.setProductionNumber(production.getProductionNumber());
                 listForClosure.add(newProd);
@@ -165,8 +165,9 @@ public class LR0 {
 
     public boolean parseSequence() throws IOException {
         Stack<StateSymbol> stateSymbols = new Stack<StateSymbol>();
-
+        inputSequence.push("$");
         getInputSequenceFromFile();
+
 
         StateSymbol initial = new StateSymbol();
         initial.setState(states.get(0));
@@ -174,15 +175,18 @@ public class LR0 {
 
         while (!inputSequence.isEmpty()) {
             if (stateSymbols.peek().getState().getAction().equals("shift")) {
-
                 StateSymbol next = new StateSymbol();
                 next.setSymbol(inputSequence.pop());
-                next.setState(getNextStateFromTable(stateSymbols.peek().getState(), next.getSymbol()));
+                if (!next.getSymbol().equals("$")) {
 
-                stateSymbols.push(next);
+                    if (getNextStateFromTable(stateSymbols.peek().getState(), next.getSymbol()) != null) {
+                        next.setState(getNextStateFromTable(stateSymbols.peek().getState(), next.getSymbol()));
+                        stateSymbols.push(next);
+                    }
+                }
             } else {
 
-                if (stateSymbols.peek().getState().getAction().equals("accept")) {
+                if (stateSymbols.peek().getState().getAction().equals("accept") && inputSequence.peek().equals("$")) {
                     return true;
 
                 } else {
@@ -197,12 +201,17 @@ public class LR0 {
 
                     StateSymbol next = new StateSymbol();
                     next.setSymbol(reduceProduction.getLhs());
-                    next.setState(getNextStateFromTable(stateSymbols.peek().getState(), reduceProduction.getLhs()));
-
+                    if(getNextStateFromTable(stateSymbols.peek().getState(), reduceProduction.getLhs())!=null)  {
+                        next.setState(getNextStateFromTable(stateSymbols.peek().getState(), reduceProduction.getLhs()));
+                    }
+                    else {
+                        return false;
+                    }
                     stateSymbols.push(next);
                 }
             }
         }
+
         return false;
     }
 
