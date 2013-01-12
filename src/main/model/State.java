@@ -128,4 +128,12 @@ public class State {
         return (Production) iterator.next();
     }
 
+    @Override
+    public String toString() {
+        return "State{" +
+                "setProductions=" + setProductions +
+                ", numberOfSet=" + numberOfSet +
+                ", action='" + action + '\'' +
+                '}';
+    }
 }
