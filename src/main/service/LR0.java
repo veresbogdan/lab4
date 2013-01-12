@@ -57,6 +57,11 @@ public class LR0 {
                     states.add(newState);
                     this.addStateToTable(newState,currentState,symbol);
 
+                } else{
+                    if(newState!=null && !newState.getSetProductions().isEmpty() ){
+                        State newState2=this.getStateAtIndex(newState);
+                        this.addStateToTableOldVertex(newState2,currentState,symbol);
+                    }
                 }
             }
         }
@@ -80,6 +85,12 @@ public class LR0 {
     }
     private void addStateToTable(State newState,State currentState,String symbol) {
         Vertex vertex=new Vertex(newState.getNumberOfState());
+        LRTable.addVertex(vertex);
+        LRTable.addEdge(currentState,newState,symbol);
+    }
+
+    private void addStateToTableOldVertex(State newState,State currentState,String symbol) {
+        Vertex vertex=LRTable.getVertexIndexWithIndex(newState.getNumberOfState());
         LRTable.addVertex(vertex);
         LRTable.addEdge(currentState,newState,symbol);
     }
@@ -129,12 +140,6 @@ public class LR0 {
 
     }
 
-    public void startTableCreationForStates() {
-        for(State state:states){
-
-        }
-    }
-
     public void getInputSequenceFromFile() throws IOException {
         FileInputStream fStream = new FileInputStream("sequence.txt");
         DataInputStream in = new DataInputStream(fStream);
@@ -182,7 +187,7 @@ public class LR0 {
 
                 } else {
                     Integer reduceIndex = Integer.parseInt(stateSymbols.peek().getState().getAction());
-                    Production reduceProduction = grammar.getListProductions().get(reduceIndex);
+                    Production reduceProduction = grammar.getListProductions().get(reduceIndex-1);
 
                     result.push(reduceIndex);
 
@@ -202,7 +207,13 @@ public class LR0 {
     }
 
     private State getNextStateFromTable(State state, String symbol) {
-        return null;
+        int numberOfState=LRTable.getTargetVertexForCost(state.getNumberOfState(),symbol);
+        if(numberOfState==-1){
+            return null;
+        }
+            else{
+            return states.get(numberOfState);
+        }
     }
 
     public void printAllStates(){
@@ -213,5 +224,17 @@ public class LR0 {
 
     public void printGraph(){
         LRTable.printGraph();
+//       List<Production> listProd=grammar.getListProductions();
+    }
+
+    public State getStateAtIndex(State state){
+        Iterator<State> iterator=states.iterator();
+        while(iterator.hasNext()){
+            State stateInner=iterator.next();
+            if (stateInner.equals(state)){
+                return stateInner;
+            }
+        }
+        return null;
     }
 }

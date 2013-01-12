@@ -1,5 +1,7 @@
 package main.grammar;
 
+import main.model.graph.Vertex;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -206,8 +208,8 @@ public class Grammar {
     //TODO
     public List<Production> getListProductions() {
         List<Production> list=new ArrayList<Production>();
-        for(int index=1; index<=productions.size(); index++){
-            list.add(index,getProductionWithIndex(index));
+        for(int index=0; index<productions.size(); index++){
+            list.add(index,getProductionWithIndex(index+1));
         }
         return list;
     }
@@ -222,4 +224,6 @@ public class Grammar {
         }
         return null;
     }
+
+
 }

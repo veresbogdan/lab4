@@ -2,10 +2,7 @@ package main.model.graph;
 
 import main.model.State;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class DirectedGraph {
@@ -135,5 +132,19 @@ public class DirectedGraph {
             }
 
         }
+    }
+
+    public Vertex getVertexIndexWithIndex(int numberOfState) {
+        return this.vertices.get(numberOfState);
+    }
+
+    public int getTargetVertexForCost(int numberOfState, String symbol) {
+        Set<Edge> list=this.vertices.get(numberOfState).getOutbound();
+        for(Edge edge:list){
+            if(edge.getCost().equals(symbol)){
+                return edge.getTarget();
+            }
+        }
+        return -1;
     }
 }
