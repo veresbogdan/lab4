@@ -1,6 +1,7 @@
 package main.model.graph;
 
 import main.model.State;
+import main.service.LR0;
 
 import java.util.*;
 
@@ -123,12 +124,14 @@ public class DirectedGraph {
         currentVertex.addOutbound(new Edge(currentVertex.getOrigin(),newVertex.getOrigin(),symbol));
     }
 
-    public void printGraph(){
+    public void printGraph(LR0 lr0){
         List<Vertex> list = new ArrayList<Vertex>(vertices.values());
         for(Vertex vertex:list){
+            System.out.println("s"+vertex.getOrigin() + " action: " +lr0.getStates().get(vertex.getOrigin()).getAction() );
             for(Edge edge:vertex.getOutbound()){
-                System.out.println(edge);
+                System.out.println("   "+edge);
             }
+            System.out.println();
 
         }
     }

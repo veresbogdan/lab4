@@ -20,7 +20,9 @@ public class StartApp {
         lr0.printAllStates();
         System.out.println("----------------------------------------------");
         System.out.println("LR(0) table \n");
-        lr0.printGraph();
+        lr0.printGraph(lr0);
+        System.out.println("----------------------------------------------");
+        System.out.println("Parsing the sequence \n");
         lr0.parseSequence();
 
         System.out.print("End");
