@@ -1,0 +1,20 @@
+program -> "Programm" decllist "." cmpdstmt "Programm Ende"
+decllist -> declaration | declaration "," decllist
+declaration ->  IDENTIFIER "=" type
+type1 -> "Ganzzahlen"
+type2 -> "Zeichenkette"
+arraydecl ::= "Fild" "[" nummer "] "type1
+      type  ::= type1|type2
+   cmpdstmt ::= "Anfang" stmtlist "Ende"
+   stmtlist ::= stmt | stmt "," stmtlist
+       stmt ::= simplstmt | structstmt
+  simplstmt ::= assignstmt | iostmt
+ assignstmt ::= IDENTIFIER "=" expression
+ expression ::= expression "+" term | term
+       term ::= term "*" factor | factor
+     factor ::= "(" expression ")" | IDENTIFIER
+     iostmt ::= "lese" | "schrieben" "(" IDENTIFIER ")"
+ structstmt ::= cmpdstmt | ifstmt | forstmt
+     ifstmt ::= "wenn" "(" condition ")" stmt ["oder" stmt]
+  forstmt ::= "jede" "("assignement "," condition  ")"  stmt
+  condition ::= expression RELATION expression
