@@ -25,7 +25,7 @@ public class StartApp {
         System.out.println("Parsing the sequence \n");
         lr0.parseSequence();
 
-        System.out.print("End");
+        System.out.print("\nEnd");
     }
 
 }

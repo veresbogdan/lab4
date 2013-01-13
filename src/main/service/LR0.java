@@ -188,6 +188,11 @@ public class LR0 {
             } else {
 
                 if (stateSymbols.peek().getState().getAction().equals("accept") && inputSequence.peek().equals("$")) {
+                    System.out.println("Sequence accepted!");
+                    System.out.println("The result - derivations strings: ");
+                    for (int i = result.size() - 1; i >= 0; i--) {
+                        System.out.print(result.get(i));
+                    }
                     return true;
 
                 } else {
@@ -204,8 +209,8 @@ public class LR0 {
                     next.setSymbol(reduceProduction.getLhs());
                     if(getNextStateFromTable(stateSymbols.peek().getState(), reduceProduction.getLhs())!=null)  {
                         next.setState(getNextStateFromTable(stateSymbols.peek().getState(), reduceProduction.getLhs()));
-                    }
-                    else {
+                    } else {
+                        System.out.println("Sequence rejected!");
                         return false;
                     }
                     stateSymbols.push(next);
@@ -222,7 +227,7 @@ public class LR0 {
             }
             System.out.println("");
         }
-
+        System.out.println("Sequence rejected!");
         return false;
     }
 
