@@ -1,0 +1,138 @@
+ 1 .Language Definition:
+  1.1 Alphabet:
+  1.1.a. Upper (A-Z) and lower case letters (a-z) of the English alphabet
+      b. Decimal digits (0-9);
+  Lexic:
+      a.Special symbols, representing:
+	 - operators + - * / < <= == >= >
+	 - separators () [] . , space
+	 - reserved words:
+	    	Programm
+			Programm Ende
+			Ganzzahlen
+			Zeichenkette
+			Fild
+			jede
+			wenn
+			oder
+			nicht
+			lesen
+			schreiben
+			Anfang 
+			Ende
+			
+		
+      b.identifiers
+	   -a sequence of letters and  digits, such that the first charater is a letter; the rule is:
+	     identifier ::= letter | letter{letter}{digit}
+	     letter ::= "A" | "B" | . ..| "Z"
+	     digit ::= "0" | "1" |...| "9"
+      c.constants
+	 1.integer - rule:
+	      noconst:=+no|-no|no
+	      no:=digit{no}
+	 2.string
+	      constchar:="string"
+		  char=:'letter'|'digit'
+	      string:={char}
+ 2.2 Syntax:
+	The words - predefined tokens are specified between " and ":	
+a) Sintactical rules:
+    program ::= "Programm" decllist "." cmpdstmt "Programm Ende"
+   decllist ::= declaration | declaration "," decllist
+declaration ::=  IDENTIFIER "=" type
+      type1 ::= "Ganzzahlen"
+	  type2 ::= "Zeichenkette"
+  arraydecl ::= "Fild" "[" nummer "] "type1
+      type  ::= type1|type2
+   cmpdstmt ::= "Anfang" stmtlist "Ende"
+   stmtlist ::= stmt | stmt "," stmtlist
+       stmt ::= simplstmt | structstmt
+  simplstmt ::= assignstmt | iostmt
+ assignstmt ::= IDENTIFIER "=" expression
+ expression ::= expression "+" term | term
+       term ::= term "*" factor | factor
+     factor ::= "(" expression ")" | IDENTIFIER
+     iostmt ::= "lese" | "schrieben" "(" IDENTIFIER ")"
+ structstmt ::= cmpdstmt | ifstmt | forstmt
+     ifstmt ::= "wenn" "(" condition ")" stmt ["oder" stmt]
+  forstmt ::= "jede" "("assignement "," condition  ")"  stmt
+  condition ::= expression RELATION expression
+b) lexical rules:
+ IDENTIFIER ::= letter | letter{letter}{digit}
+     letter ::= "A" | "B" | . ..| "Z"
+      digit ::= "0" | "1" |...| "9"
+   RELATION ::= "<" | "<=" | "=" | "<>" | ">=" | ">"
+
+The tokens are codified according to the following table:
+- identifiers	- code 0
+- constants	- code  1
+- reserved words: each word has its own code
+- operators: each operator has its own code
+- separators: each separator has its own code
+Codification:
+-------------------------
+| Token type	|   code |
+-------------------------
+| identifier	|    0  |
+-------------------------
+| constant	|    1    |
+-------------------------
+| Programm       |    2  |
+-------------------------
+|  Programm Ende	|    3  |
+-------------------------
+|    Ganzzahlen		|    4  |
+-------------------------
+|    Zeichenkette	|    5  |
+-------------------------
+|  Fild      |    6  |
+-------------------------
+|  jede  	|    7  |
+-------------------------
+| wenn       |    8  |
+-------------------------
+| oder 	|    9  |
+-------------------------
+| nicht		|   10  |
+-------------------------
+|lesen		|   11  |
+-------------------------
+|schreiben 		|   12  |
+-------------------------
+| Anfang		|   13  |
+-------------------------
+| Ende		|   14  |
+-------------------------
+|  =		|   15  |
+-------------------------
+| 	,	|   16  |
+-------------------------
+|  .		|   17  |
+-------------------------
+|  (  	|   18  |
+-------------------------
+|  )		|   19  |
+-------------------------
+|  [		|   20  |
+-------------------------
+|  ]		|   21  |
+-------------------------
+|  +		|   22  |
+-------------------------
+|  -		|   23  |
+-------------------------
+| *     	|   24  |
+-------------------------
+| /		|   25  |
+-------------------------
+|  <		|   26  |
+-------------------------
+| <= 		|   27  |
+-------------------------
+| >		|   28  |
+-------------------------
+| >=		|   29  |
+-------------------------
+| ==		|   30  |
+-------------------------
