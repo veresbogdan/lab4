@@ -18,13 +18,13 @@ public class LR0 {
     private Stack<String> inputSequence = new Stack<String>();
     private Stack<Integer> result = new Stack<Integer>();
 
-    public LR0(Grammar grammar){
+    public LR0(Grammar grammar) {
         this.grammar=grammar;
         this.states=new LinkedList<State>();
     }
 
-    public void startInitialPhase(){
-        int indexOfSet=0;
+    public void startInitialPhase() {
+        int indexOfSet = 0;
         Set<Production> firstSet = new HashSet<Production>();
         Vector<String> res = new Vector<String>();
         State state = new State();
@@ -39,27 +39,26 @@ public class LR0 {
         makeActionForState(state);
         states.add(state);
 
-        Vertex vertex=new Vertex(state.getNumberOfState());
+        Vertex vertex = new Vertex(state.getNumberOfState());
         LRTable.addVertex(vertex);
-
 
         Queue<State> stateQueue = new LinkedList<State>();
         stateQueue.add(state);
 
-        while(!stateQueue.isEmpty()){
+        while (!stateQueue.isEmpty()) {
             State currentState = stateQueue.poll();
-            for(String symbol:grammar.getAllSymbols()){
-                State newState=goTo(currentState,symbol);
+            for (String symbol: grammar.getAllSymbols()) {
+                State newState = goTo(currentState,symbol);
                 makeActionForState(newState);
-                if(newState!=null && !newState.getSetProductions().isEmpty() && !states.contains(newState)){
+                if (newState != null && !newState.getSetProductions().isEmpty() && !states.contains(newState)) {
                     stateQueue.add(newState);
                     newState.setNumberOfState(indexOfSet++);
                     states.add(newState);
                     this.addStateToTable(newState,currentState,symbol);
 
-                } else{
-                    if(newState!=null && !newState.getSetProductions().isEmpty() ){
-                        State newState2=this.getStateAtIndex(newState);
+                } else {
+                    if (newState!=null && !newState.getSetProductions().isEmpty()) {
+                        State newState2 = this.getStateAtIndex(newState);
                         this.addStateToTableOldVertex(newState2, currentState, symbol);
                     }
                 }
@@ -67,29 +66,27 @@ public class LR0 {
         }
     }
 
-    public void makeActionForState(State newState){
-        if(newState.stateIsAccept(grammar.getStartingSymbol())){
+    public void makeActionForState(State newState) {
+        if (newState.stateIsAccept(grammar.getStartingSymbol())) {
             newState.setAction("accept");
-        }
-        else{
-            int stateIsReduce=newState.stateIsReduce(grammar.getProductions());
-            if(stateIsReduce!=-1){
-                newState.setAction(Integer.toString(stateIsReduce));
-            }
-            else{
-                newState.setAction("shift");
+        } else {
+            int stateIsReduce = newState.stateIsReduce(grammar.getProductions());
 
+            if (stateIsReduce != -1) {
+                newState.setAction(Integer.toString(stateIsReduce));
+            } else {
+                newState.setAction("shift");
             }
         }
     }
     private void addStateToTable(State newState,State currentState,String symbol) {
-        Vertex vertex=new Vertex(newState.getNumberOfState());
+        Vertex vertex = new Vertex(newState.getNumberOfState());
         LRTable.addVertex(vertex);
         LRTable.addEdge(currentState,newState,symbol);
     }
 
     private void addStateToTableOldVertex(State newState,State currentState,String symbol) {
-        Vertex vertex=LRTable.getVertexIndexWithIndex(newState.getNumberOfState());
+        Vertex vertex = LRTable.getVertexIndexWithIndex(newState.getNumberOfState());
         LRTable.addVertex(vertex);
         LRTable.addEdge(currentState,newState,symbol);
     }
@@ -98,31 +95,33 @@ public class LR0 {
         states.add(s);
     }
 
+    public Set<Production> closure(Set<Production> productions) {
+        Set<Production> newStateProductions = new HashSet<Production>();
 
-    public Set<Production> closure(Set<Production> productions){
-        Set<Production> newStateProductions=new HashSet<Production>();
+        for (Production production: productions) {
+            String symbol = production.getSymbolAfterPoint();
 
-        for(Production production:productions){
-            String symbol=production.getSymbolAfterPoint();
-            if(symbol!=null && grammar.isNonTerminal(symbol)){
-                Set<Production> newProductions =grammar.getProductionsWithAGivenLHS(symbol);
-                for(Production productionInner:newProductions) {
-                    if(!productions.contains(productionInner)){
+            if (symbol != null && grammar.isNonTerminal(symbol)) {
+                Set<Production> newProductions = grammar.getProductionsWithAGivenLHS(symbol);
+
+                for (Production productionInner:newProductions) {
+                    if (!productions.contains(productionInner)) {
                        newStateProductions.add(productionInner);
                     }
                 }
-                newStateProductions=closure(newStateProductions);
+                newStateProductions = closure(newStateProductions);
             }
         }
         newStateProductions.addAll(productions);
+
         return newStateProductions;
     }
 
     public State goTo(State state,String symbol){
-        Set<Production> listForClosure=new HashSet<Production>();
-        for(Production production:state.getSetProductions()){
-            if(production.getSymbolAfterPoint()!=null && production.getSymbolAfterPoint().equals(symbol)){
-                Production newProd=new Production();
+        Set<Production> listForClosure = new HashSet<Production>();
+        for (Production production: state.getSetProductions()) {
+            if (production.getSymbolAfterPoint() != null && production.getSymbolAfterPoint().equals(symbol)) {
+                Production newProd = new Production();
                 newProd.setLhs(production.getLhs());
                 newProd.setPosition(production.getPosition() + 1);
                 newProd.setResults(production.getResults());
@@ -130,13 +129,10 @@ public class LR0 {
                 listForClosure.add(newProd);
             }
         }
-
-        State newState=new State();
+        State newState = new State();
         newState.setSetProductions(closure(listForClosure));
 
         return newState;
-
-
     }
 
     public void getInputSequenceFromFile() throws IOException {
@@ -157,7 +153,7 @@ public class LR0 {
             }
         }
         Integer listSize = list.size();
-        for(int i = listSize-1; i >= 0; i--) {
+        for (int i = listSize-1; i >= 0; i--) {
             inputSequence.push(list.get(i));
         }
     }
@@ -166,7 +162,6 @@ public class LR0 {
         Stack<StateSymbol> stateSymbols = new Stack<StateSymbol>();
         inputSequence.push("$");
         getInputSequenceFromFile();
-
 
         StateSymbol initial = new StateSymbol();
         initial.setState(states.get(0));
